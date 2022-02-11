@@ -1,16 +1,22 @@
 const express = require('express');
+var app = express();
+const server = require('http').Server(app);
+
 const bodyParser = require('body-parser');
+const socket = require('./socket');
 const db = require('./db');
-db('mongodb+srv://ivan:eq5gT9KrAD3ZtSTB@back-node.aamew.mongodb.net/back-node?retryWrites=true&w=majority')
 const router = require('./network/routes');
 
-var app = express();
+db('mongodb+srv://ivan:eq5gT9KrAD3ZtSTB@back-node.aamew.mongodb.net/back-node?retryWrites=true&w=majority')
+
 app.use(bodyParser.json()); //es json porque en postman mandaremos json en localhost/3000/message
 
+socket.connect(server);
 router(app);
 
 app.use('/app', express.static('public'));
 
-app.listen(3000); 
-console.log('La aplicacion esta escuchando en hhtp://localhost:3000');
+server.listen(3000, function(){
+    console.log('La aplicacion esta escuchando en hhtp://localhost:3000');
+}); 
 
