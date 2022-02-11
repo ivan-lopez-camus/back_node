@@ -6,5 +6,5 @@ const mySchema = new Schema({
     name: String,
 })
 
-const model = mongoose.model('Usuarios', mySchema);
-module.exports=model;
+const model = mongoose.model('User', mySchema);
+module.exports=model;  

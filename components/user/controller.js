@@ -12,13 +12,11 @@ function addUser(name){
         return store.addUser(user);   
 }
 
-function getUser(filterName){
-    return new Promise((resolve, reject)=>{
-        resolve(store.listUser(filterName));
-    });
+function listUsers() {
+    return store.listUsers();
 }
 
 module.exports = {
     addUser,
-    getUser,
+    listUsers,
 }

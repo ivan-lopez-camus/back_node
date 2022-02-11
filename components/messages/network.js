@@ -31,25 +31,13 @@ router.delete('/:id', function(req,res){
 
 router.post('/', function(req,res){
     
-    controller.addMensaje(req.body.user, req.body.message)
+    controller.addMensaje(req.body.chat,req.body.user, req.body.message)
         .then((fullMessage)=>{
             response.success(req,res,fullMessage, 201);
         })
         .catch(e=>{
             response.error(req,res,'Informacion invalida', 400, 'Error en el controlador');
         });
-
-    // if(req.query.error =='ok'){
-    //     response.error(req,res,'Error inesperado', 500, 'Es solo una simulacion de error');
-    // }
-    // else{
-    //     response.success(req,res, 'Creado correctamente', 201);
-    // }
-    //console.log(req.body);
-    // res.status(201).send([{
-    //     error: '', message:'Creado correctamente'
-    // }]);
-   
 }) 
 
 router.patch('/:id', function(req,res){

@@ -8,13 +8,22 @@ function addMessage(message){
 }
 
 async function listMessage(filterUser){
+    return new Promise((resolve,reject)=>{
+        let filter = {};
+        if(filterUser !== null){
+            filter = {user: filterUser};
+        }
+        Model.find(filter)
+            .populate('user')
+            .exec((error,populated)=>{
+                if(error){
+                    reject(error);
+                    return false;
+                }
+                resolve(populated)
+            });
+    })
     
-    let filter = {};
-    if(filterUser !== null){
-        filter = {user: filterUser};
-    }
-    const messages = await Model.find(filter);
-    return messages;
 }
 
 async function updateText(id, message){
@@ -33,7 +42,7 @@ async function existDB(id) {
     });
     return exist;
 }
-
+ 
 async function removeMessage(id) {
     if (await existDB(id)) {
         return await Model.findOneAndDelete({

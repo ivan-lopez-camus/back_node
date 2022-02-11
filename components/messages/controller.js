@@ -1,6 +1,6 @@
 const store = require('./store');
 
-function addMensaje(user, message){
+function addMensaje(chat, user, message){
 
     return new Promise((resolve, reject)=>{
         if(!user || !message ){
@@ -8,6 +8,7 @@ function addMensaje(user, message){
             return reject('Datos incorrectos');
         }
         const fullMessage = {
+            chat: chat,
             user: user,
             message: message,
             date: new Date()
