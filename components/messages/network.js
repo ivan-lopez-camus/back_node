@@ -14,12 +14,7 @@ router.get('/', function(req,res){
     .catch(e=>{
         response.error(req,res,'Unexpected Error', 500, e);
     })
-//     console.log(req.headers);//las cabeceras
-//     res.header({
-//         "custom-header": "Nuestro valor personalizado"
-//     });
-//    // res.send('Lista de mensajes');
-//    response.success(req,res, 'Lista de mensajes');
+
 });
 
 router.delete('/:id', function(req,res){
