@@ -7,11 +7,11 @@ function addMessage(message){
     myMessage.save();
 }
 
-async function listMessage(filterUser){
+async function listMessage(filterChat){
     return new Promise((resolve,reject)=>{
         let filter = {};
-        if(filterUser !== null){
-            filter = {user: filterUser};
+        if(filterChat !== null){
+            filter = {chat: filterChat};
         }
         Model.find(filter)
             .populate('user')

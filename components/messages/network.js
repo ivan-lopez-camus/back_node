@@ -1,12 +1,27 @@
 const express = require('express');
-
+const multer = require('multer');
+const path = require("path")
 const response = require('../../network/response');
-
 const router = express.Router();
 const controller = require('./controller');
 
+// const upload = multer({
+//     dest: 'uploads/',
+// })
+
+//Guarda la imagen en binario
+const storage = multer.diskStorage({
+    destination : "public/files/",
+    filename : function (req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + 
+        path.extname(file.originalname))
+    }
+})
+
+const upload = multer({ storage: storage });
+
 router.get('/', function(req,res){
-    const filterMessages = req.query.user || null;
+    const filterMessages = req.query.chat || null;
     controller.getMessages(filterMessages)
     .then((messageList)=>{
         response.success(req,res,messageList,200);
@@ -29,9 +44,9 @@ router.delete('/:id', function(req,res){
     
  });
 
-router.post('/', function(req,res){
-    
-    controller.addMensaje(req.body.chat,req.body.user, req.body.message)
+router.post('/', upload.single('file'), function(req,res){
+
+    controller.addMensaje(req.body.chat,req.body.user, req.body.message,req.file)
         .then((fullMessage)=>{
             response.success(req,res,fullMessage, 201);
         })
