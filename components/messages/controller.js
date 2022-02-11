@@ -13,18 +13,52 @@ function addMensaje(user, message){
             date: new Date()
         };
     
-        store.add(fullMessage);
+        store.addMessage(fullMessage);
         resolve(fullMessage);
     })
 }
 
-function getMessages(){
+function updateMessage(id,message){
+    // console.log(id);
+    // console.log(message);
+    return new Promise(async (resolve, reject)=>{
+        if(!id  || !message){
+            reject('Invalid data');
+            return false;
+        }
+        const result = await store.updateText(id,message);
+        resolve(result);
+    });
+}
+
+function getMessages(filterUser){
     return new Promise((resolve, reject)=>{
-        resolve(store.list())
+        resolve(store.listMessage(filterUser));
+    });
+}
+
+function deleteMessage(id) {
+    return new Promise((resolve, reject) => {
+        if(!id) {
+            reject('Invalid data');
+            returnfalse;
+        }
+        store.removeMessage(id)
+        .then((data) => {
+            if (!data) {
+                reject('Message not found')
+            }
+            resolve();
+        })
+        .catch((e) => {
+            reject(e);
+        });
     });
 }
 
 module.exports= {
     addMensaje,
-    getMessages
+    getMessages,
+    updateMessage,
+    deleteMessage
 }
