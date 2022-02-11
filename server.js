@@ -6,8 +6,9 @@ const bodyParser = require('body-parser');
 const socket = require('./socket');
 const db = require('./db');
 const router = require('./network/routes');
+require('dotenv').config()
 
-db('mongodb+srv://ivan:eq5gT9KrAD3ZtSTB@back-node.aamew.mongodb.net/back-node?retryWrites=true&w=majority')
+db(process.env.DB_URI)
 
 app.use(bodyParser.json()); //es json porque en postman mandaremos json en localhost/3000/message
 
@@ -16,7 +17,7 @@ router(app);
 
 app.use('/app', express.static('public'));
 
-server.listen(3000, function(){
+server.listen(process.env.PORT, function(){
     console.log('La aplicacion esta escuchando en hhtp://localhost:3000');
 }); 
 
